@@ -17,14 +17,14 @@
 void	ft_sighandler(int signum)
 {
 	if (signum == SIGUSR1)
-		ft_printf("salute");
+		ft_printf("1");
 	else
-		ft_printf("auRevoir");
+		ft_printf("0");
 }
 
 int	main(void)
 {
-	ft_printf("PID : %d", getpid());
+	ft_printf("PID : %d\n", getpid());
 	while(1)
 	{
 		signal(SIGUSR1, ft_sighandler);
