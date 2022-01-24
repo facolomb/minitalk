@@ -9,12 +9,9 @@
 /*   Updated: 2022/01/10 13:37:04 by facolomb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf/ft_printf.h"
-#include <signal.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "minitalk.h"
 
-int	*ft_convertToBin(char str)
+int	*ft_converttobin(char str)
 {
 	int		*a;
 	int		i;
@@ -32,7 +29,15 @@ int	*ft_convertToBin(char str)
 		a[i] = 0;
 		i++;
 	}
-	return(a);
+	return (a);
+}
+
+void	ft_sendsignal(int pid, int *message, int i)
+{
+	if (message[i] == 1)
+		kill(pid, SIGUSR1);
+	else
+		kill(pid, SIGUSR2);
 }
 
 int	main(int argc, char **argv)
@@ -49,24 +54,16 @@ int	main(int argc, char **argv)
 		while (*str != '\0')
 		{
 			i = 0;
-			message = ft_convertToBin(*str);
+			message = ft_converttobin(*str);
 			while (i <= 6)
 			{
-				printf("bit : %d ", message[i]);
-				if (message[i] == 1)
-				{
-					kill(pid, SIGUSR1);
-					printf("sent : 1\n");
-				}
-				else
-				{
-						kill(pid,SIGUSR2);
-					printf("sent : 0\n");
-				}
+				ft_sendsignal(pid, message, i);
 				i++ ;
+				usleep(50);
 			}
 			str++;
 		}
+		free(message);
 	}
 	return (0);
 }
