@@ -2,6 +2,8 @@ SRCS_SRV	= server.c
 
 SRCS_CLI	= client.c
 
+NAME	= minitalk
+
 NAME_SRV	= server
 
 NAME_CLI	= client
@@ -16,7 +18,9 @@ CC		= gcc
 
 CFLAGS	= -Wall -Wextra -Werror
 
-all:		makelib exsrv excli
+all:		${NAME}
+
+${NAME}:	makelib exsrv excli
 
 makelib:
 			$(MAKE) -C ${LIB_PATH}

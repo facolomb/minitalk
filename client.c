@@ -40,30 +40,40 @@ void	ft_sendsignal(int pid, int *message, int i)
 		kill(pid, SIGUSR2);
 }
 
+void ft_managemessage(char	*str, int pid)
+{
+	int	i;
+	int	*message;
+
+	while (*str != '\0')
+	{
+		i = 0;
+		message = ft_converttobin(*str);
+		while (i <= 6)
+		{
+			ft_sendsignal(pid, message, i);
+			i++ ;
+			usleep(50);
+		}
+		str++;
+	}
+	free(message);
+}
+
 int	main(int argc, char **argv)
 {
 	int		pid;
-	int		*message;
-	int		i;
 	char	*str;
 
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);
 		str = argv[2];
-		while (*str != '\0')
-		{
-			i = 0;
-			message = ft_converttobin(*str);
-			while (i <= 6)
-			{
-				ft_sendsignal(pid, message, i);
-				i++ ;
-				usleep(50);
-			}
-			str++;
-		}
-		free(message);
+		ft_managemessage(str, pid);
+	}
+	else
+	{
+		ft_printf("Argument error");
 	}
 	return (0);
 }
