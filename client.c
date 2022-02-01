@@ -40,7 +40,7 @@ void	ft_sendsignal(int pid, int *message, int i)
 		kill(pid, SIGUSR2);
 }
 
-void ft_managemessage(char	*str, int pid)
+void	ft_managemessage(char	*str, int pid)
 {
 	int	i;
 	int	*message;
@@ -56,8 +56,8 @@ void ft_managemessage(char	*str, int pid)
 			usleep(50);
 		}
 		str++;
+		free(message);
 	}
-	free(message);
 }
 
 int	main(int argc, char **argv)
